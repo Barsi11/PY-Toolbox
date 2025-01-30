@@ -10,7 +10,46 @@ Order_time TIME not null,
 Primary key (Order_id));
 
 3)Retrieve the total number of orders placed.
+
 SELECT COUNT(order_id) As Total_order
 from orders;
+
+4)Calculate the total revenue generated from pizza sales.
+
+Select 
+Sum(order_details.Quentity* pizzas.Price) As Total_saes
+FROM order_details join pizzas
+ON pizza_id=order_details.Pizza_id;
+
+5)Identify the highest-Price pizza.
+Select Pizza_type.name, Pizzas.Price
+from Pizza_type JOIN Pizzas
+on Pizza_type.Pizza_type_id = Pizzas.Pizza_type_id
+order by Pizzas.Price DEC limit 1;
+
+6) Identify the most common pizza size order.
+
+(it define the most commen order Quentity)
+Select Quentity,count(Order_detail_id)
+From Order_deatail Group by Quantity;
+
+(For the most common Size Pizza)
+Select Pizzas.size,count(order_detail.order_datail_id) As order_count
+from Pizzas oin order_deatails
+on Pizzas.pizza_id = order_details.pizza_id
+group by Pizzas.size order by order_count DECS;
+
+7) List the 5 most ordered pizza type along with there Quantities.
+
+Select pizza_type.name,
+SUM(order_detail.quentity)
+from pizza_type join Pizzas
+on Pizza_type.pizza_type_id = Pizzas.pizza_type_id
+join order_details
+on order_details.pizza_id = Pizzas.pizza_id
+group by pizza_types.name order by Quentity DECS limit 5;
+
+Interm
+
 
 
