@@ -47,9 +47,48 @@ from pizza_type join Pizzas
 on Pizza_type.pizza_type_id = Pizzas.pizza_type_id
 join order_details
 on order_details.pizza_id = Pizzas.pizza_id
-group by pizza_types.name order by Quentity DECS limit 5;
+group by pizza_types.name order by quantity DECS limit 5;
 
-Interm
+Intermediate:
+
+8)Join the necessary tables to find the total quantity of each pizza category ordered.
+SELECT Pizza_type.category,
+sum(Order_details.quantity) as quentity
+from pizza_type join pizza
+on pizza_type.pizza_type_id = Pizzas.pizza_type_id
+join order_details
+on order_detaoils.pizza_id = Pizzas.pizza_id
+group by pizza_type.category order by quantity DESC;
+
+
+9)Determine the distribution of orders by hour of the day.
+SELECT hour(order_time), count(order_id)
+from Order
+Group by hour(order_time);
+
+
+10)Join relevant tables to find the category-wise distribution of pizzas.
+SELECT category , count(name)
+from Pizza_type
+group by category;
+
+
+11)Group the orders by date and calculate the average number of pizzas ordered per day.
+Select avg(quantity)from
+(Select Order.order_date, sum(oder_detail.quantity)
+from order join order_detail
+on order.order_id = order_detail.order_id
+group by order.order_date;) as order_quentaty;
+
+
+12)Determine the top 3 most ordered pizza types based on revenue.
+Select Pizza_type.name,
+sum(order_details.quentity * Pizzas.price) as revenue
+from pizza_type join Pizzas
+on Pizzas.pizza_type_id = Pizza_type.pizza_type_id
+join order_details
+on order_details.pizza_id = Pizza.pizza_id
+group by pizza_type.name order by revenue desc limit 3;
 
 
 
